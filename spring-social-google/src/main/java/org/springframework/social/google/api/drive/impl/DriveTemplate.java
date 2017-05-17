@@ -15,6 +15,7 @@
  */
 package org.springframework.social.google.api.drive.impl;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA;
 import static org.springframework.social.google.api.drive.DriveFile.FOLDER;
@@ -43,6 +44,7 @@ import org.springframework.social.google.api.impl.AbstractGoogleApiOperations;
 import org.springframework.social.google.api.impl.PatchBuilder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -293,5 +295,10 @@ public class DriveTemplate extends AbstractGoogleApiOperations implements
 	@Override
 	public Resource downloadFile(DriveFile file) {
 		return restTemplate.getForObject(file.getDownloadUrl(), Resource.class);
+	}
+
+	@Override
+	public <T> T downloadFile(DriveFile file, ResponseExtractor<T> responseExtractor) {
+		return restTemplate.execute(file.getDownloadUrl(), GET, null, responseExtractor, new Object[0]);
 	}
 }

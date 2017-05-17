@@ -18,6 +18,7 @@ package org.springframework.social.google.api.drive;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
+import org.springframework.web.client.ResponseExtractor;
 
 /**
  * Defines operations for integrating with Google Drive. Requires OAuth scope(s)
@@ -393,4 +394,6 @@ public interface DriveOperations {
 	 * @return Resource abstraction for the file
 	 */
 	Resource downloadFile(DriveFile file);
+
+	<T> T downloadFile(DriveFile file, ResponseExtractor<T> responseExtractor);
 }
